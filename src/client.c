@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
-// #include "minitalk.h"
 #include "corekit.h"
 
 int main()
