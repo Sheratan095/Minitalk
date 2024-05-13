@@ -1,0 +1,7 @@
+*.o
+client
+client_bonus
+server
+server_bonus
+.nfs*
+#Casual files not better identified
