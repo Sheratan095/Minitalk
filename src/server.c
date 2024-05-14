@@ -6,7 +6,7 @@
 /*   By: maceccar <maceccar@student.42firenze.it>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by maceccar          #+#    #+#             */
-/*   Updated: 2024/05/08 15:08:17 by maceccar         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:10:16 by maceccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static void	signal_handler(int signal);
 
-int main()
+int	main(void)
 {
 	ft_printf("Server pid: %i\n", getpid());
 	signal(SIGUSR1, signal_handler);
@@ -37,13 +37,10 @@ static void	signal_handler(int signal)
 	if (signal == SIGUSR1)
 		c |= (0x01 << bits_read);
 	bits_read++;
-
 	if (bits_read == 8)
 	{
 		ft_printf("%c", c);
 		bits_read = 0;
 		c = 0;
 	}
-
-
 }
