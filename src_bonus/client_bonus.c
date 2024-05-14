@@ -6,7 +6,7 @@
 /*   By: maceccar <maceccar@student.42firenze.it>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by maceccar          #+#    #+#             */
-/*   Updated: 2024/05/14 16:10:21 by maceccar         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:18:04 by maceccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 #include "corekit.h"
 
 //Acknowledgment ascii character
-#define ACKNOWLEDGE	'6'
+#define ACKNOWLEDGE	6
 
 static void	send_string(char *string, int pid);
 static void	send_char(char c, __pid_t pid);
+static void	hanlde_acknowledge();
+
 
 //Check argouments
 //Check pid validity
@@ -36,10 +38,14 @@ int	main(int argc, char *argv[])
 	srv_pid = ft_atoi(argv[1]);
 	if (srv_pid <= 0)
 		return (ft_printf("Error, invalid pid"));
+	signal(ACKNOWLEDGE, hanlde_acknowledge);
 	send_string(argv[2], srv_pid);
+	while (true)
+		;
 }
 
 //Send all char of the string
+//At the end, send the acknowledgement
 static void	send_string(char *string, int pid)
 {
 	int	i;
@@ -47,6 +53,7 @@ static void	send_string(char *string, int pid)
 	i = 0;
 	while (string[i])
 		send_char(string[i++], pid);
+	send_char(ACKNOWLEDGE, pid);
 }
 
 //Check_senging is used to check if the signal was
@@ -88,4 +95,10 @@ static void	send_char(char c, __pid_t pid)
 		usleep(100);
 		bits++;
 	}
+}
+
+static void	hanlde_acknowledge()
+{
+	ft_printf("Message recived\n");
+	exit(0);
 }
