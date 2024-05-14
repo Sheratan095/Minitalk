@@ -1,4 +1,5 @@
 *.o
+**/*.o
 client
 client_bonus
 server
