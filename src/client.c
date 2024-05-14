@@ -60,7 +60,7 @@ static void	send_string(char *string, int pid)
 //		send SIGURS2 (1)
 //	Check the return value of kill()
 //	Uspleep is used to avoid sending bits too close to each other
-//		because the server can't read them (set to 42 just for fan)
+//		because the server can't read them (set to 100 just for fan)
 static void	send_char(char c, __pid_t pid)
 {
 	int	bits;
@@ -78,7 +78,7 @@ static void	send_char(char c, __pid_t pid)
 			ft_printf("Error during sending the bits\nCheck the pid\n");
 			exit(0);
 		}
-		usleep(42);
+		usleep(100);
 		bits++;
 	}
 }
