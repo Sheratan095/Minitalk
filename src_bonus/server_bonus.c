@@ -31,8 +31,6 @@ int	main(void)
 	if (sigaction(SIGUSR2, &sa_newsig, NULL) == -1)
 		return (ft_printf("Failed to change SIGUSR2's behavior"), 0);
 	ft_printf("Server pid: %i\n", getpid());
-	// signal(SIGUSR1, signal_handler);
-	// signal(SIGUSR2, signal_handler);
 	while (true)
 		;
 }
@@ -42,12 +40,22 @@ int	main(void)
 //link: https://www-uxsup.csx.cam.ac.uk/courses/moved.Building/signals.pdf
 //when the char is 6 (Acknowledgment) => the message is end
 //=> printf '\n' and send the reply
+//	(void)content; => for flags
+
 static void	signal_handler(int signal, siginfo_t *info, void *content)
 {
 	static int	c;
 	static int	bits_read;
+	static int	current_client_pid;
 
 	(void)content;
+	if (current_client_pid != info->si_pid && current_client_pid != 0)
+	{
+		ft_printf("\n");
+		bits_read = 0;
+		c = 0;
+	}
+	current_client_pid = info->si_pid;
 	if (signal == SIGUSR1)
 		c |= (0x01 << bits_read);
 	bits_read++;
