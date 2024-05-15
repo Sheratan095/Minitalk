@@ -26,7 +26,7 @@ int	main(void)
 		return (ft_printf("Error duging changing SIGUSR1's beahavior"), 0);
 	if (sigaction(SIGUSR2, &sa_newsig, NULL) == -1)
 		return (ft_printf("Error duging changing SIGUSR2's beahavior"), 0);
-	ft_printf("Server pid: %i\n", getpid());
+	ft_printf("Server pid: %i\n\n", getpid());
 	while (true)
 		;
 }

@@ -19,6 +19,7 @@
 #define ACKNOWLEDGE	6
 
 static void	signal_handler(int signal, siginfo_t *info, void *content);
+static void	reset_integers(int *c, int *bits);
 
 int	main(void)
 {
@@ -30,7 +31,7 @@ int	main(void)
 		return (ft_printf("Failed to change SIGUSR1's behavior"), 0);
 	if (sigaction(SIGUSR2, &sa_newsig, NULL) == -1)
 		return (ft_printf("Failed to change SIGUSR2's behavior"), 0);
-	ft_printf("Server pid: %i\n", getpid());
+	ft_printf("Server pid: %i\n\n", getpid());
 	while (true)
 		;
 }
@@ -48,12 +49,10 @@ static void	signal_handler(int signal, siginfo_t *info, void *content)
 	static int	bits_read;
 	static int	current_client_pid;
 
-	(void)content;
 	if (current_client_pid != info->si_pid && current_client_pid != 0)
 	{
-		ft_printf("\n");
-		bits_read = 0;
-		c = 0;
+		ft_printf("\n\n");
+		reset_integers(&c, &bits_read);
 	}
 	current_client_pid = info->si_pid;
 	if (signal == SIGUSR1)
@@ -64,12 +63,16 @@ static void	signal_handler(int signal, siginfo_t *info, void *content)
 		if (c == ACKNOWLEDGE)
 		{
 			if (kill(info->si_pid, ACKNOWLEDGE) < 0)
-				ft_printf("Error during sending of response to client\n");
-			ft_printf("\n");
+				ft_printf("Error sending of response to client\n");
 		}
 		else
 			ft_printf("%c", c);
-		bits_read = 0;
-		c = 0;
+		reset_integers(&c, &bits_read);
 	}
+}
+
+static void	reset_integers(int *c, int *bits)
+{
+	*bits = 0;
+	*c = 0;
 }

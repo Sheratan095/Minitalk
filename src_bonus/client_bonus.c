@@ -19,8 +19,7 @@
 
 static void	send_string(char *string, int pid);
 static void	send_char(char c, __pid_t pid);
-static void	hanlde_acknowledge();
-
+static void	hanlde_acknowledge(int signal);
 
 //Check argouments
 //Check pid validity
@@ -97,7 +96,7 @@ static void	send_char(char c, __pid_t pid)
 	}
 }
 
-static void	hanlde_acknowledge()
+static void	hanlde_acknowledge(int signal)
 {
 	ft_printf("Message recived\n");
 	exit(0);
