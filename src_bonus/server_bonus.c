@@ -63,13 +63,12 @@ static void	signal_handler(int signal, siginfo_t *info, void *content)
 	{
 		if (c == ACKNOWLEDGE)
 		{
+			if (kill(info->si_pid, ACKNOWLEDGE) < 0)
+				ft_printf("Error during sending of response to client\n");
 			ft_printf("\n");
-			kill(info->si_pid, ACKNOWLEDGE);
-			bits_read = 0;
-			c = 0;
-			return;
 		}
-		ft_printf("%c", c);
+		else
+			ft_printf("%c", c);
 		bits_read = 0;
 		c = 0;
 	}

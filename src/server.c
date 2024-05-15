@@ -23,9 +23,9 @@ int	main(void)
 	sa_newsig.sa_sigaction = &signal_handler;
 	sa_newsig.sa_flags = SA_SIGINFO;
 	if (sigaction(SIGUSR1, &sa_newsig, NULL) == -1)
-		return (ft_printf("Failed to change SIGUSR1's behavior"), 0);
+		return (ft_printf("Error duging changing SIGUSR1's beahavior"), 0);
 	if (sigaction(SIGUSR2, &sa_newsig, NULL) == -1)
-		return (ft_printf("Failed to change SIGUSR2's behavior"), 0);
+		return (ft_printf("Error duging changing SIGUSR2's beahavior"), 0);
 	ft_printf("Server pid: %i\n", getpid());
 	while (true)
 		;
@@ -44,12 +44,11 @@ static void	signal_handler(int signal, siginfo_t *info, void *content)
 	(void)content;
 	if (current_client_pid != info->si_pid && current_client_pid != 0)
 	{
-		ft_printf("\n");
+		ft_printf("\n\n");
 		bits_read = 0;
 		c = 0;
 	}
 	current_client_pid = info->si_pid;
-
 	if (signal == SIGUSR1)
 		c |= (0x01 << bits_read);
 	bits_read++;

@@ -87,7 +87,7 @@ static void	send_char(char c, __pid_t pid)
 			check_sending = kill(pid, SIGUSR1);
 		else
 			check_sending = kill(pid, SIGUSR2);
-		if (check_sending != 0)
+		if (check_sending < 0)
 		{
 			ft_printf("Error during sending the bits\nCheck the pid\n");
 			exit(0);
