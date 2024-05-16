@@ -33,7 +33,7 @@ int	main(void)
 		return (ft_printf("Failed to change SIGUSR2's behavior"), 0);
 	ft_printf("Server pid: %i\n\n", getpid());
 	while (true)
-		;
+		pause();
 }
 
 //SIGUSER1: 10=> 1
@@ -42,7 +42,7 @@ int	main(void)
 //when the char is 6 (Acknowledgment) => the message is end
 //=> printf '\n' and send the reply
 //	(void)content; => for flags
-
+//uslpeep interrupt the process until recive a signal
 static void	signal_handler(int signal, siginfo_t *info, void *content)
 {
 	static int	c;
@@ -69,8 +69,10 @@ static void	signal_handler(int signal, siginfo_t *info, void *content)
 			ft_printf("%c", c);
 		reset_integers(&c, &bits_read);
 	}
+	usleep(10);
 }
 
+//Just for normi
 static void	reset_integers(int *c, int *bits)
 {
 	*bits = 0;

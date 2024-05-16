@@ -24,6 +24,8 @@ static void	hanlde_acknowledge(int signal);
 //Check argouments
 //Check pid validity
 //	link: ibm.com/docs/it/zos/2.4.0?topic=functions-kill-send-signal-process
+//This loop will not consume CPU resources while waiting because the pause() 
+//	system call puts the process to sleep until a signal is received.
 int	main(int argc, char *argv[])
 {
 	__pid_t	srv_pid;
@@ -40,7 +42,7 @@ int	main(int argc, char *argv[])
 	signal(ACKNOWLEDGE, hanlde_acknowledge);
 	send_string(argv[2], srv_pid);
 	while (true)
-		;
+		pause();
 }
 
 //Send all char of the string

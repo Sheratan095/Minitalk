@@ -28,7 +28,7 @@ int	main(void)
 		return (ft_printf("Error duging changing SIGUSR2's beahavior"), 0);
 	ft_printf("Server pid: %i\n\n", getpid());
 	while (true)
-		;
+		pause();
 }
 
 //SIGUSER1: 10=> 1
@@ -58,4 +58,5 @@ static void	signal_handler(int signal, siginfo_t *info, void *content)
 		bits_read = 0;
 		c = 0;
 	}
+	usleep(10);
 }
