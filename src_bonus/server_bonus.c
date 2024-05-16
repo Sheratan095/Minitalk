@@ -43,6 +43,7 @@ int	main(void)
 //=> printf '\n' and send the reply
 //	(void)content; => for flags
 //uslpeep interrupt the process until recive a signal
+//Ultimo invio della conferma che il server e pronto a ricevere di nuovo
 static void	signal_handler(int signal, siginfo_t *info, void *content)
 {
 	static int	c;
@@ -70,6 +71,11 @@ static void	signal_handler(int signal, siginfo_t *info, void *content)
 		reset_integers(&c, &bits_read);
 	}
 	usleep(10);
+	if (kill(info->si_pid, 0) == -1)
+	{
+		write(2, "Error: unexpected signal behavior\n", 35);
+		exit(EXIT_FAILURE);
+	}
 }
 
 //Just for normi
