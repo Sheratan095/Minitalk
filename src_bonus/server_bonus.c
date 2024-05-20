@@ -44,38 +44,34 @@ int	main(void)
 //	(void)content; => for flags
 //uslpeep interrupt the process until recive a signal
 //Ultimo invio della conferma che il server e pronto a ricevere di nuovo
+//Last printf is done inside exit() beacause of norminette
 static void	signal_handler(int signal, siginfo_t *info, void *content)
 {
 	static int	c;
 	static int	bits_read;
 	static int	current_client_pid;
 
+	(void)content;
 	if (current_client_pid != info->si_pid)
 	{
-		current_client_pid = info->si_pid;
 		ft_printf("\n\n");
 		reset_integers(&c, &bits_read);
 	}
+	current_client_pid = info->si_pid;
 	if (signal == SIGUSR1)
 		c |= (0x01 << bits_read);
 	bits_read++;
 	if (bits_read == 8)
 	{
-		if (c == ACKNOWLEDGE)
-		{
-			if (kill(info->si_pid, SIGUSR2) < 0)
-				ft_printf("Error sending of response to client\n");
-		}
-		else
+		if (c != ACKNOWLEDGE)
 			ft_printf("%c", c);
+		else if (kill(info->si_pid, SIGUSR2) < 0)
+			ft_printf("Error sending of response to client\n");
 		reset_integers(&c, &bits_read);
 	}
 	usleep(100);
 	if (kill(info->si_pid, SIGUSR1) == -1)
-	{
-		write(2, "Error: unexpected signal behavior\n", 35);
-		exit(EXIT_FAILURE);
-	}
+		exit(ft_printf("Error: unexpected signal behavior\n"));
 }
 
 //Just for normi

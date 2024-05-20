@@ -17,7 +17,7 @@
 //Acknowledgment ascii character
 #define ACKNOWLEDGE	6
 
-int g_semaphore;
+int	g_semaphore;
 
 static void	send_string(char *string, int pid);
 static void	send_char(char c, __pid_t pid);
@@ -30,7 +30,7 @@ static void	hanlde_acknowledge(int signal, siginfo_t *info, void *content);
 //	system call puts the process to sleep until a signal is received.
 int	main(int argc, char *argv[])
 {
-	__pid_t	srv_pid;
+	__pid_t				srv_pid;
 	struct sigaction	sa_newsig;
 
 	sa_newsig.sa_sigaction = &hanlde_acknowledge;

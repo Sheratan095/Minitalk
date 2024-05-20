@@ -5,7 +5,7 @@ COREKIT_PATH = ./Corekit
 INCLUDES = -I$(COREKIT_PATH)/includes
 
 #TO DO rimettere le flag
-#FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra
 
 %.o: %.c
 	@$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
