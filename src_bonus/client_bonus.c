@@ -17,19 +17,25 @@
 //Acknowledgment ascii character
 #define ACKNOWLEDGE	6
 
+int g_semaphore;
+
 static void	send_string(char *string, int pid);
 static void	send_char(char c, __pid_t pid);
-static void	hanlde_acknowledge(int signal);
+static void	hanlde_acknowledge(int signal, siginfo_t *info, void *content);
 
 //Check argouments
 //Check pid validity
 //	link: ibm.com/docs/it/zos/2.4.0?topic=functions-kill-send-signal-process
-//This loop will not consume CPU resources while waiting because the pause() 
+//This loop will not consume CPU resources while waiting because the pause()
 //	system call puts the process to sleep until a signal is received.
 int	main(int argc, char *argv[])
 {
 	__pid_t	srv_pid;
+	struct sigaction	sa_newsig;
 
+	sa_newsig.sa_sigaction = &hanlde_acknowledge;
+	sa_newsig.sa_flags = SA_SIGINFO;
+	g_semaphore = 1;
 	if (argc != 3)
 	{
 		ft_printf("Error, rigth input format is:\n");
@@ -39,10 +45,11 @@ int	main(int argc, char *argv[])
 	srv_pid = ft_atoi(argv[1]);
 	if (srv_pid <= 0)
 		return (ft_printf("Error, invalid pid"));
-	signal(ACKNOWLEDGE, hanlde_acknowledge);
+	if (sigaction(SIGUSR1, &sa_newsig, NULL) == -1)
+		return (ft_printf("Failed to change SIGUSR1's behavior"), 0);
+	if (sigaction(SIGUSR2, &sa_newsig, NULL) == -1)
+		return (ft_printf("Failed to change SIGUSR2's behavior"), 0);
 	send_string(argv[2], srv_pid);
-	while (true)
-		pause();
 }
 
 //Send all char of the string
@@ -95,13 +102,19 @@ static void	send_char(char c, __pid_t pid)
 			exit(0);
 		}
 		bits++;
+		while (g_semaphore == 0)
+			usleep(100);
+		g_semaphore = 0;
 		usleep(100);
-		pause();
 	}
 }
 
-static void	hanlde_acknowledge(int signal)
+static void	hanlde_acknowledge(int signal, siginfo_t *info, void *content)
 {
-	ft_printf("Message recived\n");
-	exit(0);
+	(void)content;
+	(void)info;
+	if (signal == SIGUSR2)
+		ft_printf("Message recived\n");
+	if (signal == SIGUSR1)
+		g_semaphore = 1;
 }
