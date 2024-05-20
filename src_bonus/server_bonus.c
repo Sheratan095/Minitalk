@@ -6,7 +6,7 @@
 /*   By: maceccar <maceccar@student.42firenze.it>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by maceccar          #+#    #+#             */
-/*   Updated: 2024/05/14 16:17:58 by maceccar         ###   ########.fr       */
+/*   Updated: 2024/05/20 17:35:41 by maceccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	main(void)
 //=> printf '\n' and send the reply
 //	(void)content; => for flags
 //uslpeep interrupt the process until recive a signal
-//Ultimo invio della conferma che il server e pronto a ricevere di nuovo
+//Last singal sent if for confirm that server is ready to recive again
 //Last printf is done inside exit() beacause of norminette
 static void	signal_handler(int signal, siginfo_t *info, void *content)
 {

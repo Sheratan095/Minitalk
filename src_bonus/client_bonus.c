@@ -6,7 +6,7 @@
 /*   By: maceccar <maceccar@student.42firenze.it>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by maceccar          #+#    #+#             */
-/*   Updated: 2024/05/14 16:18:04 by maceccar         ###   ########.fr       */
+/*   Updated: 2024/05/20 17:35:41 by maceccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,20 @@ int	g_semaphore;
 
 static void	send_string(char *string, int pid);
 static void	send_char(char c, __pid_t pid);
-static void	hanlde_acknowledge(int signal, siginfo_t *info, void *content);
+static void	hanlde_signal(int signal, siginfo_t *info, void *content);
 
+// sa_newsig.sa_sigaction = &hanlde_signal;
+//	subscribes the function to singal reception
 //Check argouments
 //Check pid validity
 //	link: ibm.com/docs/it/zos/2.4.0?topic=functions-kill-send-signal-process
-//This loop will not consume CPU resources while waiting because the pause()
-//	system call puts the process to sleep until a signal is received.
+//Sigaction() assign to the specified signal (SIGUSR1- SIGUSR2) the sigaction
 int	main(int argc, char *argv[])
 {
 	__pid_t				srv_pid;
 	struct sigaction	sa_newsig;
 
-	sa_newsig.sa_sigaction = &hanlde_acknowledge;
+	sa_newsig.sa_sigaction = &hanlde_signal;
 	sa_newsig.sa_flags = SA_SIGINFO;
 	g_semaphore = 1;
 	if (argc != 3)
@@ -53,7 +54,7 @@ int	main(int argc, char *argv[])
 }
 
 //Send all char of the string
-//At the end, send the acknowledgement
+//At the end, send the acknowledgement => end of string
 static void	send_string(char *string, int pid)
 {
 	int	i;
@@ -83,7 +84,9 @@ static void	send_string(char *string, int pid)
 //	Check the return value of kill()
 //	Uspleep is used to avoid sending bits too close to each other
 //		because the server can't read them (set to 100 just for fan)
-//Pause wait for the server tha says that's ready for a new send
+//Client wait until the server is ready to recive another bit
+//	it's managed by a 'semaphore' that change its status when the server
+//	send SIGUSR1 to client
 static void	send_char(char c, __pid_t pid)
 {
 	int	bits;
@@ -109,7 +112,9 @@ static void	send_char(char c, __pid_t pid)
 	}
 }
 
-static void	hanlde_acknowledge(int signal, siginfo_t *info, void *content)
+//SIGURS1 server is ready to recive another bit, semaphore is green
+//SIGURS2 message recived correctly
+static void	hanlde_signal(int signal, siginfo_t *info, void *content)
 {
 	(void)content;
 	(void)info;
