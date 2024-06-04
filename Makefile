@@ -62,7 +62,7 @@ clean:
 	@rm -fr *.o
 	@rm -fr **/*.o
 	@${MAKE} -C $(COREKIT_PATH) clean -s
-	@echo "$(RED)[COREKIT]:\t COREKIT CLEAN$(RESET)"
+	@echo "$(RED)[MINITALK]:\t MINITALK CLEAN$(RESET)"
 
 fclean: clean
 	@rm -f *.a
@@ -74,7 +74,7 @@ fclean: clean
 	@rm -fr server_bonus
 	@rm -f $(NAME)
 	@${MAKE} -C $(COREKIT_PATH) fclean -s
-	@echo "$(RED)[COREKIT]:\t COREKIT FCLEAN$(RESET)"
+	@echo "$(RED)[MINITALK]:\t MINITALK FCLEAN$(RESET)"
 
 re: fclean all
 
