@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maceccar <maceccar@student.42firenze.it>   +#+  +:+       +#+        */
+/*   By: maceccar <maceccar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by maceccar          #+#    #+#             */
-/*   Updated: 2024/05/20 17:35:41 by maceccar         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:29:05 by maceccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char *argv[])
 	g_semaphore = 1;
 	if (argc != 3)
 	{
-		ft_printf("Error, rigth input format is:\n");
+		ft_printf("Error, right input format is:\n");
 		ft_printf("./client <SERVER PID> <STRING TO SEND>\n");
 		exit(0);
 	}

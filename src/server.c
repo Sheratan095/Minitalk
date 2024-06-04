@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maceccar <maceccar@student.42firenze.it>   +#+  +:+       +#+        */
+/*   By: maceccar <maceccar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by maceccar          #+#    #+#             */
-/*   Updated: 2024/05/20 17:35:41 by maceccar         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:28:03 by maceccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	signal_handler(int signal, siginfo_t *info, void *content)
 		if (c != ACKNOWLEDGE)
 			ft_printf("%c", c);
 		else if (kill(info->si_pid, SIGUSR2) < 0)
-			ft_printf("Error sending of response to client\n");
+			ft_printf("Error sending response to client\n");
 		reset_integers(&c, &bits_read);
 	}
 	usleep(100);

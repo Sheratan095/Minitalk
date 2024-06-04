@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maceccar <maceccar@student.42firenze.it>   +#+  +:+       +#+        */
+/*   By: maceccar <maceccar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by maceccar          #+#    #+#             */
-/*   Updated: 2024/05/20 17:35:41 by maceccar         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:30:47 by maceccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int argc, char *argv[])
 	g_semaphore = 1;
 	if (argc != 3)
 	{
-		ft_printf("Error, rigth input format is:\n");
+		ft_printf("Error, right input format is:\n");
 		ft_printf("./client <SERVER PID> <STRING TO SEND>\n");
 		exit(0);
 	}
@@ -113,13 +113,13 @@ static void	send_char(char c, __pid_t pid)
 }
 
 //SIGURS1 server is ready to recive another bit, semaphore is green
-//SIGURS2 message recived correctly
+//SIGURS2 message received correctly
 static void	hanlde_signal(int signal, siginfo_t *info, void *content)
 {
 	(void)content;
 	(void)info;
 	if (signal == SIGUSR2)
-		ft_printf("Message recived\n");
+		ft_printf("Message received\n");
 	if (signal == SIGUSR1)
 		g_semaphore = 1;
 }
