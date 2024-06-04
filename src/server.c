@@ -6,7 +6,7 @@
 /*   By: maceccar <maceccar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by maceccar          #+#    #+#             */
-/*   Updated: 2024/06/04 14:28:03 by maceccar         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:33:10 by maceccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	signal_handler(int signal, siginfo_t *info, void *content)
 	}
 	usleep(100);
 	if (kill(info->si_pid, SIGUSR1) == -1)
-		return(ft_printf("Error: unexpected signal behavior\n", 35));
+		ft_printf("Error: unexpected signal behavior\n", 35);
 }
 
 //Just for normi

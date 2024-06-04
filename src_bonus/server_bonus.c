@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maceccar <maceccar@student.42firenze.it>   +#+  +:+       +#+        */
+/*   By: maceccar <maceccar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by maceccar          #+#    #+#             */
-/*   Updated: 2024/05/20 17:35:41 by maceccar         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:33:33 by maceccar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	signal_handler(int signal, siginfo_t *info, void *content)
 	}
 	usleep(100);
 	if (kill(info->si_pid, SIGUSR1) == -1)
-		return(ft_printf("Error: unexpected signal behavior\n"));
+		ft_printf("Error: unexpected signal behavior\n");
 }
 
 //Just for normi
